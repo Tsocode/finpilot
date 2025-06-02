@@ -1,11 +1,14 @@
 from fastapi import FastAPI, File, UploadFile
+from dotenv import load_dotenv
+import os
 import openai
 import pdfplumber
 from openai import OpenAI
 
 
+load_dotenv()
 app = FastAPI()
-client = OpenAI(api_key="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")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 @app.post("/summarize/")
 async def summarize(file: UploadFile = File(...), model: str = "gpt-3.5-turbo"):
